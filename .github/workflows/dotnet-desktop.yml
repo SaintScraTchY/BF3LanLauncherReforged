@@ -5,9 +5,13 @@ on:
     tags:
       - 'v*'
   workflow_dispatch:
+    inputs:
+      tag_name:
+        description: 'Tag to release (e.g., v1.0.0)'
+        required: true
 
 permissions:
-  contents: write   # 👈 Required for creating releases
+  contents: write
 
 jobs:
   build-and-release:
@@ -29,7 +33,7 @@ jobs:
         run: |
           dotnet publish src/BF3LanReforged/BF3LanReforged.csproj -c Release -o ./publish --self-contained true -p:PublishSingleFile=true -p:RuntimeIdentifier=win-x64
 
-      - name: Copy bf3_offline.exe to publish folder
+      - name: Copy bf3_offline.exe
         run: copy .\src\PatchedLauncher\bf3_offline.exe .\publish\
 
       - name: Create ZIP archive
@@ -38,6 +42,7 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ github.event.inputs.tag_name || github.ref_name }}
           files: ./BF3_LAN_Launcher.zip
           generate_release_notes: true
         env:
