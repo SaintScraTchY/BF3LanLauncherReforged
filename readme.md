@@ -11,6 +11,7 @@ A modern, unified launcher for **Battlefield 3** that enables **LAN / VLAN co-op
     <td><img src="Screenshots/Multiplayer.png" alt="Multiplayer View" width="400"/></td>
   </tr>
 </table>
+
 ## ✨ Features
 
 - 🎮 **One launcher for both Co-op and Multiplayer** – no more switching between two apps.
@@ -21,6 +22,7 @@ A modern, unified launcher for **Battlefield 3** that enables **LAN / VLAN co-op
 - 🛡️ **No Origin/EA App required after setup** – just the patched game files.
 
 ---
+
 ## 🙏 Credits & Original Sources
 
 This project would not exist without the incredible work of the Chinese modding community.
@@ -79,6 +81,7 @@ Other missions may have similar auto-progression issues. **Always use the launch
 - **Client:** Enter host IP → **Join**.
 
 ---
+
 ## 🛠️ Building from Source
 
 - Requires Visual Studio 2022 (or newer) , VSCODE or  JetBrains Rider💖  with .NET 10 SDK.
