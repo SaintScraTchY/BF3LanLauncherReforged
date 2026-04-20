@@ -6,6 +6,9 @@ on:
       - 'v*'
   workflow_dispatch:
 
+permissions:
+  contents: write   # 👈 Required for creating releases
+
 jobs:
   build-and-release:
     runs-on: windows-latest
@@ -30,12 +33,12 @@ jobs:
         run: copy .\src\PatchedLauncher\bf3_offline.exe .\publish\
 
       - name: Create ZIP archive
-        run: Compress-Archive -Path ./publish/* -DestinationPath ./BF3LanLauncher.zip
+        run: Compress-Archive -Path ./publish/* -DestinationPath ./BF3_LAN_Launcher.zip
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: ./BF3LanLauncher.zip
+          files: ./BF3_LAN_Launcher.zip
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
