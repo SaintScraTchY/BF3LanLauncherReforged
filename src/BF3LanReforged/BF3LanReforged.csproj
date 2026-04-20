@@ -16,5 +16,43 @@
       <PackageReference Include="MaterialDesignColors" Version="5.3.1" />
       <PackageReference Include="MaterialDesignThemes" Version="5.3.1" />
     </ItemGroup>
+    <ItemGroup>
+      <Resource Include="Images\bf3.Ico" />
+      <Resource Include="Images\BF3_Coop_1.bmp" />
+      <Resource Include="Images\BF3_Coop_2.bmp" />
+      <Resource Include="Images\BF3_Coop_3.bmp" />
+      <Resource Include="Images\BF3_Coop_4.bmp" />
+      <Resource Include="Images\BF3_Coop_5.bmp" />
+      <Resource Include="Images\BF3_Coop_6.bmp" />
+      <Resource Include="Images\MP_001.bmp" />
+      <Resource Include="Images\MP_003.bmp" />
+      <Resource Include="Images\MP_007.bmp" />
+      <Resource Include="Images\MP_011.bmp" />
+      <Resource Include="Images\MP_012.bmp" />
+      <Resource Include="Images\MP_013.bmp" />
+      <Resource Include="Images\MP_017.bmp" />
+      <Resource Include="Images\MP_018.bmp" />
+      <Resource Include="Images\MP_Subway.bmp" />
+      <Resource Include="Images\XP1_001.bmp" />
+      <Resource Include="Images\XP1_002.bmp" />
+      <Resource Include="Images\XP1_003.bmp" />
+      <Resource Include="Images\XP1_004.bmp" />
+      <Resource Include="Images\XP2_Factory.bmp" />
+      <Resource Include="Images\XP2_Office.bmp" />
+      <Resource Include="Images\XP2_Palace.bmp" />
+      <Resource Include="Images\XP2_Skybar.bmp" />
+      <Resource Include="Images\XP3_Alborz.bmp" />
+      <Resource Include="Images\XP3_Desert.bmp" />
+      <Resource Include="Images\XP3_Shield.bmp" />
+      <Resource Include="Images\XP3_Valley.bmp" />
+      <Resource Include="Images\XP4_FD.bmp" />
+      <Resource Include="Images\XP4_Parl.bmp" />
+      <Resource Include="Images\XP4_Quake.bmp" />
+      <Resource Include="Images\XP4_Rubble.bmp" />
+      <Resource Include="Images\XP5_001.bmp" />
+      <Resource Include="Images\XP5_002.bmp" />
+      <Resource Include="Images\XP5_003.bmp" />
+      <Resource Include="Images\XP5_004.bmp" />
+    </ItemGroup>
 
 </Project>

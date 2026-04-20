@@ -15,8 +15,8 @@ public partial class MainWindow
     private string _currentMpMapLevel = "MP_001/MP_001";
 
     // Data bindings
-    private List<CoopMapInfo> CoopMaps { get; set; } = [];
-    private List<GameModeInfo> GameModes { get; set; } = [];
+    public List<CoopMapInfo> CoopMaps { get; set; } = [];
+    public List<GameModeInfo> GameModes { get; set; } = [];
     private List<MapInfo>? CurrentMapList { get; set; } = [];
 
     public MainWindow()
@@ -210,27 +210,27 @@ public partial class MainWindow
 
     private void GameModeComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
     {
-        if (GameModeComboBox.SelectedItem is GameModeInfo mode)
-        {
-            _currentMpMode = mode.InternalName;
-            CurrentMapList = GetMapsForMode(mode.InternalName);
-            MapComboBox.ItemsSource = CurrentMapList;
-            MapComboBox.SelectedIndex = 0;
-        }
+        if (GameModeComboBox.SelectedItem is not GameModeInfo mode) 
+            return;
+        
+        _currentMpMode = mode.InternalName;
+        CurrentMapList = GetMapsForMode(mode.InternalName);
+        MapComboBox.ItemsSource = CurrentMapList;
+        MapComboBox.SelectedIndex = 0;
     }
 
     private void MapComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
     {
-        if (MapComboBox.SelectedItem is MapInfo map)
-        {
-            _currentMpMapLevel = map.LevelPath;
-            MpMapImage.Source = new BitmapImage(new Uri(map.ImagePath, UriKind.Relative));
-        }
+        if (MapComboBox.SelectedItem is not MapInfo map) 
+            return;
+        
+        _currentMpMapLevel = map.LevelPath;
+        MpMapImage.Source = new BitmapImage(new Uri(map.ImagePath, UriKind.Relative));
     }
 
     private void ConnectButton_Click(object sender, RoutedEventArgs e)
     {
-        string ip = IpTextBox.Text.Trim();
+        var ip = IpTextBox.Text.Trim();
         if (!IsValidIp(ip))
         {
             MessageBox.Show("Please enter a valid IP address.", "Invalid IP", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -238,33 +238,33 @@ public partial class MainWindow
             return;
         }
 
-        string args = $"-super layout.toc -Client.IsPresenceEnabled false -Core.EnableJuice 0 " +
-                      $"-DisplayAsserts 0 -Persistence.AllUnlocksAlwaysUnlocked true " +
-                      $"-Render.DebugRendererEnable 0 -Client.ServerIp {ip}";
+        var args = $"-super layout.toc -Client.IsPresenceEnabled false -Core.EnableJuice 0 " +
+                   $"-DisplayAsserts 0 -Persistence.AllUnlocksAlwaysUnlocked true " +
+                   $"-Render.DebugRendererEnable 0 -Client.ServerIp {ip}";
 
         LaunchGame(args);
     }
 
     private void StartCoopServerButton_Click(object sender, RoutedEventArgs e)
     {
-        string args = $"-super layout.toc -Client.IsPresenceEnabled false " +
-                      $"-Game.Level Levels/{_currentCoopMapLevel} " +
-                      $"-Render.DebugRendererEnable 0 -Core.EnableJuice 0 " +
-                      $"-Online.Backend Backend_Lan -DisplayAsserts 0 " +
-                      $"-Persistence.AllUnlocksAlwaysUnlocked true";
+        var args = $"-super layout.toc -Client.IsPresenceEnabled false " +
+                   $"-Game.Level Levels/{_currentCoopMapLevel} " +
+                   $"-Render.DebugRendererEnable 0 -Core.EnableJuice 0 " +
+                   $"-Online.Backend Backend_Lan -DisplayAsserts 0 " +
+                   $"-Persistence.AllUnlocksAlwaysUnlocked true";
 
         LaunchGame(args);
     }
 
     private void StartMpServerButton_Click(object sender, RoutedEventArgs e)
     {
-        string args = $"-super layout.toc -Client.IsPresenceEnabled false " +
-                      $"-Game.Level Levels/{_currentMpMapLevel} " +
-                      $"-Game.DisablePreRound 1 " +
-                      $"-Game.DefaultLayerInclusion GameMode={_currentMpMode} " +
-                      $"-Render.DebugRendererEnable 1 -Core.EnableJuice 0 " +
-                      $"-Online.Backend Backend_Lan -DisplayAsserts 0 " +
-                      $"-Persistence.AllUnlocksAlwaysUnlocked true";
+        var args = $"-super layout.toc -Client.IsPresenceEnabled false " +
+                   $"-Game.Level Levels/{_currentMpMapLevel} " +
+                   $"-Game.DisablePreRound 1 " +
+                   $"-Game.DefaultLayerInclusion GameMode={_currentMpMode} " +
+                   $"-Render.DebugRendererEnable 1 -Core.EnableJuice 0 " +
+                   $"-Online.Backend Backend_Lan -DisplayAsserts 0 " +
+                   $"-Persistence.AllUnlocksAlwaysUnlocked true";
 
         LaunchGame(args);
     }
@@ -308,15 +308,15 @@ public partial class MainWindow
             DragMove();
     }
 
-    private void MinimizeButton_Click(object sender, RoutedEventArgs e)
-    {
-        this.WindowState = WindowState.Minimized;
-    }
+        private void MinimizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
 
-    private void CloseButton_Click(object sender, RoutedEventArgs e)
-    {
-        Application.Current.Shutdown();
-    }
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
 
     [GeneratedRegex(@"^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$")]
     private static partial Regex MyRegex();

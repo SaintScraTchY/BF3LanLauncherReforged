@@ -8,7 +8,7 @@
         Title="BF3 LAN Launcher" Height="550" Width="500"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None" AllowsTransparency="True"
-        Background="Transparent">
+        Background="Transparent" FontSize="16">
     
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="32" GlassFrameThickness="0" 
@@ -34,13 +34,17 @@
                     <TextBlock Text="Battlefield 3 LAN Launcher" Foreground="White" 
                                FontWeight="SemiBold" FontSize="13"/>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,4,0">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,0">
                     <Button Style="{StaticResource MaterialDesignFlatButton}" 
+                            Background="Transparent"
+                            WindowChrome.IsHitTestVisibleInChrome="True"
                             x:Name="MinimizeButton" Click="MinimizeButton_Click"
                             ToolTip="Minimize">
                         <materialDesign:PackIcon Kind="WindowMinimize"/>
                     </Button>
-                    <Button Style="{StaticResource MaterialDesignFlatButton}" 
+                    <Button Style="{StaticResource MaterialDesignFlatButton}"
+                            Background="Transparent"
+                            WindowChrome.IsHitTestVisibleInChrome="True"
                             x:Name="CloseButton" Click="CloseButton_Click"
                             ToolTip="Close">
                         <materialDesign:PackIcon Kind="WindowClose"/>
@@ -55,14 +59,13 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- Account Edit Button (takes natural size) -->
-                <Button Grid.Column="0"
-                        Style="{StaticResource MaterialDesignFloatingActionButton}"
-                        Padding="0" Margin="0,0,12,0"
-                        VerticalAlignment="Center">
-                    <materialDesign:PackIcon Kind="AccountEdit" 
-                                             Width="52" Height="52" 
-                                             HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                </Button>
+                <!-- <Button Grid.Column="0" -->
+                <!--         Style="{StaticResource MaterialDesignFloatingActionButton}" -->
+                <!--         Padding="0" Margin="0,0,12,0" -->
+                <!--         VerticalAlignment="Center"> -->
+                <!--     <materialDesign:PackIcon Kind="AccountEdit" Width="52" Height="52"  -->
+                <!--         HorizontalAlignment="Center" VerticalAlignment="Center"/> -->
+                <!-- </Button> -->
 
                 <!-- Connection Panel (expands to fill remaining width) -->
                 <Border Grid.Column="1" Padding="12" 
