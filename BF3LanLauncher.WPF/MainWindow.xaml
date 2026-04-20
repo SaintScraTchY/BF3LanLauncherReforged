@@ -1,0 +1,175 @@
+﻿<Window x:Class="BF3LanLauncher.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="BF3 LAN Launcher" Height="550" Width="500"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None" AllowsTransparency="True"
+        Background="Transparent">
+    
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="32" GlassFrameThickness="0" 
+                      CornerRadius="8" ResizeBorderThickness="4"/>
+    </WindowChrome.WindowChrome>
+
+    <Border Background="{DynamicResource MaterialDesignPaper}" 
+            CornerRadius="8" BorderBrush="{DynamicResource MaterialDesignDivider}" 
+            BorderThickness="1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="32"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Custom Title Bar -->
+            <Grid Grid.Row="0" Background="{DynamicResource MaterialDesignDarkBackground}" 
+                  MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+                <StackPanel Orientation="Horizontal" Margin="12,0,0,0" VerticalAlignment="Center">
+                    <materialDesign:PackIcon Kind="GamepadVariant" Foreground="White" 
+                                             Width="20" Height="20" Margin="0,0,8,0"/>
+                    <TextBlock Text="Battlefield 3 LAN Launcher" Foreground="White" 
+                               FontWeight="SemiBold" FontSize="13"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,4,0">
+                    <Button Style="{StaticResource MaterialDesignFlatButton}" 
+                            x:Name="MinimizeButton" Click="MinimizeButton_Click"
+                            ToolTip="Minimize">
+                        <materialDesign:PackIcon Kind="WindowMinimize"/>
+                    </Button>
+                    <Button Style="{StaticResource MaterialDesignFlatButton}" 
+                            x:Name="CloseButton" Click="CloseButton_Click"
+                            ToolTip="Close">
+                        <materialDesign:PackIcon Kind="WindowClose"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+
+            <Grid Margin="16" Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Account Edit Button (takes natural size) -->
+                <Button Grid.Column="0"
+                        Style="{StaticResource MaterialDesignFloatingActionButton}"
+                        Padding="0" Margin="0,0,12,0"
+                        VerticalAlignment="Center">
+                    <materialDesign:PackIcon Kind="AccountEdit" 
+                                             Width="52" Height="52" 
+                                             HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Button>
+
+                <!-- Connection Panel (expands to fill remaining width) -->
+                <Border Grid.Column="1" Padding="12" 
+                        Background="{DynamicResource MaterialDesignCardBackground}"
+                        CornerRadius="6">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+            
+                        <TextBlock Text="Server IP:" VerticalAlignment="Center"
+                                   FontWeight="SemiBold" Margin="0,0,12,0"/>
+            
+                        <TextBox x:Name="IpTextBox" Grid.Column="1" 
+                                 materialDesign:HintAssist.Hint="e.g. 192.168.1.100"
+                                 VerticalAlignment="Center"/>
+            
+                        <Button Grid.Column="2" Content="Connect" 
+                                Margin="12,0,0,0" Padding="16,6"
+                                Click="ConnectButton_Click"
+                                ToolTip="Join a LAN server using the IP above"/>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!-- Mode Tabs (Co-op / Multiplayer) -->
+            <TabControl Grid.Row="2" Margin="16,0,16,16" 
+                        Style="{StaticResource MaterialDesignTabControl}"
+                        SelectionChanged="TabControl_SelectionChanged">
+                <!-- CO-OP TAB -->
+                <TabItem Header="CO-OP">
+                    <Grid Margin="12">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="Select Co-op Mission" FontWeight="SemiBold" 
+                                   Margin="0,0,0,8"/>
+                        
+                        <ComboBox x:Name="CoopMapComboBox" Grid.Row="0" 
+                                  Style="{StaticResource MaterialDesignFilledComboBox}"
+                                  ItemsSource="{Binding CoopMaps}" 
+                                  DisplayMemberPath="DisplayName"
+                                  SelectedIndex="0"
+                                  SelectionChanged="CoopMapComboBox_SelectionChanged"
+                                  Margin="0,0,0,16"/>
+
+                        <Border Grid.Row="1" Background="{DynamicResource MaterialDesignDarkBackground}" 
+                                CornerRadius="8" Padding="8">
+                            <Image x:Name="CoopMapImage" Stretch="Uniform" 
+                                   Source="/Images/BF3_Coop_1.bmp"/>
+                        </Border>
+
+                        <Button Grid.Row="2" Content="Start CO-OP Server &amp; Play" 
+                                Style="{StaticResource MaterialDesignRaisedButton}"
+                                Height="40" Margin="0,16,0,0"
+                                Click="StartCoopServerButton_Click"
+                                ToolTip="Host a Co-op server on this machine"/>
+                    </Grid>
+                </TabItem>
+
+                <!-- MULTIPLAYER TAB -->
+                <TabItem Header="MULTIPLAYER">
+                    <Grid Margin="12">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="Game Mode" FontWeight="SemiBold" Margin="0,0,0,8"/>
+                        <ComboBox x:Name="GameModeComboBox" Grid.Row="0" 
+                                  Style="{StaticResource MaterialDesignFilledComboBox}"
+                                  ItemsSource="{Binding GameModes}" 
+                                  DisplayMemberPath="DisplayName"
+                                  SelectedIndex="0"
+                                  SelectionChanged="GameModeComboBox_SelectionChanged"
+                                  Margin="0,0,0,12"/>
+
+                        <TextBlock Grid.Row="1" Text="Map" FontWeight="SemiBold" 
+                                   Margin="0,0,0,8"/>
+                        <ComboBox x:Name="MapComboBox" Grid.Row="1" 
+                                  Style="{StaticResource MaterialDesignFilledComboBox}"
+                                  DisplayMemberPath="DisplayName"
+                                  SelectedIndex="0"
+                                  SelectionChanged="MapComboBox_SelectionChanged"
+                                  Margin="0,0,0,16"/>
+
+                        <Border Grid.Row="2" Background="{DynamicResource MaterialDesignDarkBackground}" 
+                                CornerRadius="8" Padding="8">
+                            <Image x:Name="MpMapImage" Stretch="Uniform" 
+                                   Source="/Images/MP_001.bmp"/>
+                        </Border>
+
+                        <Button Grid.Row="3" Content="Start MP Server &amp; Play" 
+                                Style="{StaticResource MaterialDesignRaisedButton}"
+                                Height="40" Margin="0,16,0,0"
+                                Click="StartMpServerButton_Click"
+                                ToolTip="Host a Multiplayer server on this machine"/>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+        </Grid>
+    </Border>
+</Window>
