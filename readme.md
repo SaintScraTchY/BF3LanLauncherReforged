@@ -53,7 +53,7 @@ Other missions may have similar auto-progression issues. **Always use the launch
 
 ### 1. Prerequisites
 
-- Battlefield 3 with the **community LAN patch** applied (the one originally from Chinese sources, included in the `ybsp` archive).
+- Battlefield 3 with the **community LAN patch** applied.
 - Both players on the same LAN or connected via a V-LAN tool (Radmin VPN, ZeroTier, Hamachi).
 - .NET 10 Runtime (if not self-contained).
 
