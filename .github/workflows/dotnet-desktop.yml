@@ -29,21 +29,49 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore src/BF3LanReforged/BF3LanReforged.csproj
 
-      - name: Publish application
+      # ----- Self-Contained (Single File) -----
+      - name: Publish Self-Contained
         run: |
-          dotnet publish src/BF3LanReforged/BF3LanReforged.csproj -c Release -o ./publish --self-contained true -p:PublishSingleFile=true -p:RuntimeIdentifier=win-x64
+          dotnet publish src/BF3LanReforged/BF3LanReforged.csproj `
+            -c Release `
+            -o ./publish/self-contained `
+            -p:PublishSingleFile=true `
+            -p:IncludeNativeLibrariesForSelfExtract=true `
+            -p:PublishReadyToRun=true `
+            -p:RuntimeIdentifier=win-x64 `
+            -p:SelfContained=true
 
-      - name: Copy bf3_offline.exe
-        run: copy .\src\PatchedLauncher\bf3_offline.exe .\publish\
+      - name: Copy bf3_offline.exe to self-contained folder
+        run: copy .\src\PatchedLauncher\bf3_offline.exe .\publish\self-contained\
 
-      - name: Create ZIP archive
-        run: Compress-Archive -Path ./publish/* -DestinationPath ./BF3_LAN_Launcher.zip
+      - name: Create Self-Contained ZIP
+        run: Compress-Archive -Path ./publish/self-contained/* -DestinationPath ./BF3_LAN_Launcher_SelfContained.zip
 
+      # ----- Framework-Dependent (requires .NET runtime) -----
+      - name: Publish Framework-Dependent
+        run: |
+          dotnet publish src/BF3LanReforged/BF3LanReforged.csproj `
+            -c Release `
+            -o ./publish/framework-dependent `
+            -p:PublishSingleFile=true `
+            -p:IncludeNativeLibrariesForSelfExtract=true `
+            -p:PublishReadyToRun=true `
+            -p:SelfContained=false
+
+      - name: Copy bf3_offline.exe to framework-dependent folder
+        run: copy .\src\PatchedLauncher\bf3_offline.exe .\publish\framework-dependent\
+
+      - name: Create Framework-Dependent ZIP
+        run: Compress-Archive -Path ./publish/framework-dependent/* -DestinationPath ./BF3_LAN_Launcher_FrameworkDependent.zip
+
+      # ----- Create Release with both ZIPs -----
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.event.inputs.tag_name || github.ref_name }}
-          files: ./BF3_LAN_Launcher.zip
+          files: |
+            ./BF3_LAN_Launcher_SelfContained.zip
+            ./BF3_LAN_Launcher_FrameworkDependent.zip
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
