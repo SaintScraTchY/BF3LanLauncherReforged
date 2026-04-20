@@ -5,7 +5,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
-namespace BF3LanLauncher;
+namespace BF3LanReforged;
 
 public partial class MainWindow
 {
@@ -303,14 +303,14 @@ public partial class MainWindow
     private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
         if (e.ClickCount == 2)
-            WindowState = WindowState == WindowState.Normal ? WindowState.Maximized : WindowState.Normal;
+            this.WindowState = this.WindowState == WindowState.Normal ? WindowState.Maximized : WindowState.Normal;
         else
             DragMove();
     }
 
     private void MinimizeButton_Click(object sender, RoutedEventArgs e)
     {
-        WindowState = WindowState.Minimized;
+        this.WindowState = WindowState.Minimized;
     }
 
     private void CloseButton_Click(object sender, RoutedEventArgs e)
@@ -323,27 +323,3 @@ public partial class MainWindow
 
     #endregion
 }
-
-#region Data Models
-
-public class CoopMapInfo(string displayName, string levelPath, string imagePath)
-{
-    public string DisplayName { get; } = displayName;
-    public string LevelPath { get; } = levelPath;
-    public string ImagePath { get; } = imagePath;
-}
-
-public class GameModeInfo(string displayName, string internalName)
-{
-    public string DisplayName { get; } = displayName;
-    public string InternalName { get; } = internalName;
-}
-
-public class MapInfo(string displayName, string levelPath, string imagePath)
-{
-    public string DisplayName { get; } = displayName;
-    public string LevelPath { get; } = levelPath;
-    public string ImagePath { get; } = imagePath;
-}
-
-#endregion
