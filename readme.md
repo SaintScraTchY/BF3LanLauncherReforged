@@ -14,11 +14,8 @@ A modern, unified launcher for **Battlefield 3** that enables **LAN / VLAN co-op
 
 ## ✨ Features
 
-- 🎮 **One launcher for both Co-op and Multiplayer** – no more switching between two apps.
 - 🌐 **LAN / VLAN play** – works over Hamachi, Radmin VPN, ZeroTier, or any direct Ethernet/WiFi.
-- 🔧 **Modern .NET 10 + WPF** – fast, native Windows UI with full high-DPI support.
 - 🌍 **English interface** – original Chinese tool fully translated and improved.
-- 🚀 **Launch any co-op mission directly** 
 - 🛡️ **No Origin/EA App required after setup** – just the patched game files.
 
 ---
