@@ -37,7 +37,6 @@ jobs:
             -o ./publish/self-contained `
             -p:PublishSingleFile=true `
             -p:IncludeNativeLibrariesForSelfExtract=true `
-            -p:PublishReadyToRun=true `
             -p:RuntimeIdentifier=win-x64 `
             -p:SelfContained=true
 
@@ -55,7 +54,6 @@ jobs:
             -o ./publish/framework-dependent `
             -p:PublishSingleFile=true `
             -p:IncludeNativeLibrariesForSelfExtract=true `
-            -p:PublishReadyToRun=true `
             -p:SelfContained=false
 
       - name: Copy bf3_offline.exe to framework-dependent folder
