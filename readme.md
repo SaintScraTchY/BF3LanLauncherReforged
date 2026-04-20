@@ -7,8 +7,8 @@ A modern, unified launcher for **Battlefield 3** that enables **LAN / VLAN co-op
 
 <table>
   <tr>
-    <td><img src="COOP.png" alt="COOP View" width="400"/></td>
-    <td><img src="MultiPlayer.png" alt="Multiplayer View" width="400"/></td>
+    <td><img src="Screenshots/COOP.png" alt="COOP View" width="400"/></td>
+    <td><img src="Screenshots/Multiplayer.png" alt="Multiplayer View" width="400"/></td>
   </tr>
 </table>
 ## ✨ Features
