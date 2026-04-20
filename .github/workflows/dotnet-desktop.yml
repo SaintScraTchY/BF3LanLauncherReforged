@@ -1,0 +1,41 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build-and-release:
+    runs-on: windows-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore src/BF3LanReforged/BF3LanReforged.csproj
+
+      - name: Publish application
+        run: |
+          dotnet publish src/BF3LanReforged/BF3LanReforged.csproj -c Release -o ./publish --self-contained true -p:PublishSingleFile=true -p:RuntimeIdentifier=win-x64
+
+      - name: Copy bf3_offline.exe to publish folder
+        run: copy .\src\PatchedLauncher\bf3_offline.exe .\publish\
+
+      - name: Create ZIP archive
+        run: Compress-Archive -Path ./publish/* -DestinationPath ./BF3LanLauncher.zip
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ./BF3LanLauncher.zip
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
