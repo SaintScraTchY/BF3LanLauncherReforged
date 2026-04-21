@@ -300,7 +300,6 @@ public partial class MainWindow
                    $"-DisplayAsserts 0 -Persistence.AllUnlocksAlwaysUnlocked true " +
                    $"-Render.DebugRendererEnable 0 -Client.ServerIp {ip}";
 
-        return;
         LaunchGame(args);
     }
 
@@ -317,8 +316,6 @@ public partial class MainWindow
                    $"-Persistence.AllUnlocksAlwaysUnlocked true";
         
         
-        return;
-
         LaunchGame(args);
     }
 
@@ -336,7 +333,6 @@ public partial class MainWindow
                    $"-Online.Backend Backend_Lan -DisplayAsserts 0 " +
                    $"-Persistence.AllUnlocksAlwaysUnlocked true";
 
-        return;
         LaunchGame(args);
     }
 

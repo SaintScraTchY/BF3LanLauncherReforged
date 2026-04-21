@@ -56,7 +56,7 @@
                             WindowChrome.IsHitTestVisibleInChrome="True"
                             x:Name="MinimizeButton" Click="MinimizeButton_Click"
                             ToolTip="Minimize">
-                        <materialDesign:PackIcon Kind="Loading"/>
+                        <materialDesign:PackIcon Kind="Minimize"/>
                     </Button>
                     <Button Style="{StaticResource MaterialDesignFlatButton}"
                             Background="Transparent"
