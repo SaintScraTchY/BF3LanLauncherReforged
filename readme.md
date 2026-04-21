@@ -96,7 +96,6 @@ dotnet build -c Release
 
 Pull requests are welcome – especially for:
 - Fixing the mission auto-progression bug.
-- Adding more translations (Russian, Spanish, etc.).
 - Improving VLAN detection.
 - Adding Basic Server Configuration to Multiplayer
 - Adding Basic Moderation to Multiplayer
