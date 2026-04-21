@@ -10,6 +10,22 @@
         WindowStyle="None" AllowsTransparency="True"
         Background="Transparent" FontSize="16">
     
+    <Window.Resources>
+        <Style x:Key="LaunchButtonStyle" 
+               BasedOn="{StaticResource MaterialDesignRaisedButton}" 
+               TargetType="{x:Type Button}">
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <!-- Override default disabled appearance to keep content visible -->
+                    <Setter Property="Opacity" Value="1"/>
+                    <Setter Property="Foreground" Value="{DynamicResource MaterialDesignBody}"/>
+                    <Setter Property="Background" Value="{DynamicResource MaterialDesignPaper}"/>
+                    <Setter Property="BorderBrush" Value="{DynamicResource MaterialDesignDivider}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="32" GlassFrameThickness="0" 
                       CornerRadius="8" ResizeBorderThickness="4"/>
@@ -40,7 +56,7 @@
                             WindowChrome.IsHitTestVisibleInChrome="True"
                             x:Name="MinimizeButton" Click="MinimizeButton_Click"
                             ToolTip="Minimize">
-                        <materialDesign:PackIcon Kind="WindowMinimize"/>
+                        <materialDesign:PackIcon Kind="Loading"/>
                     </Button>
                     <Button Style="{StaticResource MaterialDesignFlatButton}"
                             Background="Transparent"
@@ -85,7 +101,7 @@
                                  materialDesign:HintAssist.Hint="e.g. 192.168.1.100"
                                  VerticalAlignment="Center"/>
             
-                        <Button Grid.Column="2" Content="Connect" 
+                        <Button x:Name="ConnectButton" Grid.Column="2" Content="Connect"  Style="{StaticResource LaunchButtonStyle}"
                                 Margin="12,0,0,0" Padding="16,6"
                                 Click="ConnectButton_Click"
                                 ToolTip="Join a LAN server using the IP above"/>
@@ -123,8 +139,8 @@
                                    Source="/Images/BF3_Coop_1.bmp"/>
                         </Border>
 
-                        <Button Grid.Row="2" Content="Start CO-OP Server &amp; Play" 
-                                Style="{StaticResource MaterialDesignRaisedButton}"
+                        <Button x:Name="StartCoopButton" Grid.Row="2" Content="Start CO-OP Server &amp; Play" 
+                                Style="{StaticResource LaunchButtonStyle}"
                                 Height="40" Margin="0,16,0,0"
                                 Click="StartCoopServerButton_Click"
                                 ToolTip="Host a Co-op server on this machine"/>
@@ -165,8 +181,8 @@
                                    Source="/Images/MP_001.bmp"/>
                         </Border>
 
-                        <Button Grid.Row="3" Content="Start MP Server &amp; Play" 
-                                Style="{StaticResource MaterialDesignRaisedButton}"
+                        <Button x:Name="StartMpButton" Grid.Row="3" Content="Start MP Server &amp; Play" 
+                                Style="{StaticResource LaunchButtonStyle}"
                                 Height="40" Margin="0,16,0,0"
                                 Click="StartMpServerButton_Click"
                                 ToolTip="Host a Multiplayer server on this machine"/>

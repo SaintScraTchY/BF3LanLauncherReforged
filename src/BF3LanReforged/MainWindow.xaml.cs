@@ -2,8 +2,10 @@
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 
 namespace BF3LanReforged;
 
@@ -13,6 +15,9 @@ public partial class MainWindow
     private string _currentCoopMapLevel = "COOP_007/COOP_007";
     private string _currentMpMode = "ConquestLarge0";
     private string _currentMpMapLevel = "MP_001/MP_001";
+    private readonly DispatcherTimer _cooldownTimer;
+    private Button? _activeButton;
+    private object? _originalButtonContent;
 
     // Data bindings
     public List<CoopMapInfo> CoopMaps { get; set; } = [];
@@ -24,8 +29,57 @@ public partial class MainWindow
         InitializeComponent();
         DataContext = this;
 
+        // Setup cooldown timer
+        _cooldownTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(10) };
+        _cooldownTimer.Tick += CooldownTimer_Tick;
+        
         LoadMapData();
         VerifyGameFiles();
+    }
+    private void StartCooldown(Button clickedButton)
+    {
+        if (_cooldownTimer.IsEnabled) return;
+
+        _activeButton = clickedButton;
+        _originalButtonContent = clickedButton.Content;
+
+        // Disable all launch buttons
+        ConnectButton.IsEnabled = false;
+        StartCoopButton.IsEnabled = false;
+        StartMpButton.IsEnabled = false;
+
+        // Replace clicked button content with animated circular progress bar
+        var progressBar = new ProgressBar
+        {
+            Style = (Style)FindResource("MaterialDesignCircularProgressBar"),
+            IsIndeterminate = true,
+            Width = 20,
+            Height = 20,
+            Margin = new Thickness(5, 0, 5, 0)
+        };
+
+        var contentPanel = new StackPanel { Orientation = Orientation.Horizontal };
+        contentPanel.Children.Add(progressBar);
+        contentPanel.Children.Add(new TextBlock { Text = "Launching...", VerticalAlignment = VerticalAlignment.Center });
+        clickedButton.Content = contentPanel;
+
+        _cooldownTimer.Start();
+    }
+
+    private void CooldownTimer_Tick(object? sender, EventArgs e)
+    {
+        _cooldownTimer.Stop();
+
+        // Re-enable all buttons
+        ConnectButton.IsEnabled = true;
+        StartCoopButton.IsEnabled = true;
+        StartMpButton.IsEnabled = true;
+
+        // Restore original content
+        if (_activeButton != null)
+            _activeButton.Content = _originalButtonContent;
+
+        _activeButton = null;
     }
 
     private static void VerifyGameFiles()
@@ -230,6 +284,8 @@ public partial class MainWindow
 
     private void ConnectButton_Click(object sender, RoutedEventArgs e)
     {
+        if (_cooldownTimer.IsEnabled) return; // Prevent double‑click while cooldown active
+
         var ip = IpTextBox.Text.Trim();
         if (!IsValidIp(ip))
         {
@@ -238,26 +294,40 @@ public partial class MainWindow
             return;
         }
 
+        StartCooldown((Button)sender);
+
         var args = $"-super layout.toc -Client.IsPresenceEnabled false -Core.EnableJuice 0 " +
                    $"-DisplayAsserts 0 -Persistence.AllUnlocksAlwaysUnlocked true " +
                    $"-Render.DebugRendererEnable 0 -Client.ServerIp {ip}";
 
+        return;
         LaunchGame(args);
     }
 
     private void StartCoopServerButton_Click(object sender, RoutedEventArgs e)
     {
+        if (_cooldownTimer.IsEnabled) return;
+
+        StartCooldown((Button)sender);
+
         var args = $"-super layout.toc -Client.IsPresenceEnabled false " +
                    $"-Game.Level Levels/{_currentCoopMapLevel} " +
                    $"-Render.DebugRendererEnable 0 -Core.EnableJuice 0 " +
                    $"-Online.Backend Backend_Lan -DisplayAsserts 0 " +
                    $"-Persistence.AllUnlocksAlwaysUnlocked true";
+        
+        
+        return;
 
         LaunchGame(args);
     }
 
     private void StartMpServerButton_Click(object sender, RoutedEventArgs e)
     {
+        if (_cooldownTimer.IsEnabled) return;
+
+        StartCooldown((Button)sender);
+
         var args = $"-super layout.toc -Client.IsPresenceEnabled false " +
                    $"-Game.Level Levels/{_currentMpMapLevel} " +
                    $"-Game.DisablePreRound 1 " +
@@ -266,6 +336,7 @@ public partial class MainWindow
                    $"-Online.Backend Backend_Lan -DisplayAsserts 0 " +
                    $"-Persistence.AllUnlocksAlwaysUnlocked true";
 
+        return;
         LaunchGame(args);
     }
 
