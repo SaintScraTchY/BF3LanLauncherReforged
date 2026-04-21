@@ -11,16 +11,15 @@ A modern, unified launcher for **Battlefield 3** that enables **LAN / VLAN co-op
     <td><img src="Screenshots/Multiplayer.png" alt="Multiplayer View" width="400"/></td>
   </tr>
 </table>
+
 ## ✨ Features
 
-- 🎮 **One launcher for both Co-op and Multiplayer** – no more switching between two apps.
 - 🌐 **LAN / VLAN play** – works over Hamachi, Radmin VPN, ZeroTier, or any direct Ethernet/WiFi.
-- 🔧 **Modern .NET 10 + WPF** – fast, native Windows UI with full high-DPI support.
 - 🌍 **English interface** – original Chinese tool fully translated and improved.
-- 🚀 **Launch any co-op mission directly** 
 - 🛡️ **No Origin/EA App required after setup** – just the patched game files.
 
 ---
+
 ## 🙏 Credits & Original Sources
 
 This project would not exist without the incredible work of the Chinese modding community.
@@ -79,6 +78,7 @@ Other missions may have similar auto-progression issues. **Always use the launch
 - **Client:** Enter host IP → **Join**.
 
 ---
+
 ## 🛠️ Building from Source
 
 - Requires Visual Studio 2022 (or newer) , VSCODE or  JetBrains Rider💖  with .NET 10 SDK.
@@ -96,7 +96,6 @@ dotnet build -c Release
 
 Pull requests are welcome – especially for:
 - Fixing the mission auto-progression bug.
-- Adding more translations (Russian, Spanish, etc.).
 - Improving VLAN detection.
 - Adding Basic Server Configuration to Multiplayer
 - Adding Basic Moderation to Multiplayer
